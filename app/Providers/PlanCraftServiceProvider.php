@@ -22,17 +22,23 @@ class PlanCraftServiceProvider extends ServiceProvider
     {
         $this->definePlans();
     }
-
-    protected function definePlans(): void
-    {
-        PlanCraft::create('basic', 'Basic', '12|129.6', 'Monthly|Yearly', [
+protected function definePlans(): void
+{
+    PlanCraft::create('basic','Basic','12|129.6','Monthly|Yearly', [
             '10 Chirps',
             '5 Teams',
-        ], [
-            'max_chirps' => 2,
+        ],
+        [
+            'max_chirps' => 14,
             'max_teams' => 5,
-        ], 'price_1NqHCSKiNV0qopCOj6eILBMK|bisic_price_yearly')->description('Basic plan users can create 10 Chirps on per team and Create 5 Teams.')
-        ->trialDays(7)->yearlyIncentive('Save 10%');
+        ],
+        env('CHIRP_BASIC_PRICE_MONTHLY') . '|' . env('CHIRP_BASIC_PRICE_YEARLY') // Price IDs
+    )
+    ->description('Basic plan users can create 10 Chirps per team and 5 Teams.')
+    ->trialDays(7)
+    ->yearlyIncentive('Save 10%');
+
+
 
         PlanCraft::create('pro', 'Pro', '19|205.2', 'Monthly|Yearly', [
             '20 Chirps',
